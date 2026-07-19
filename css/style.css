@@ -1003,7 +1003,7 @@ footer{
 }
 
 /* =======================================================
-   DARK MODE (Préparation)
+   DARK MODE
 ======================================================= */
 
 body.dark{
@@ -1014,11 +1014,38 @@ body.dark{
 
 }
 
-body.dark .navbar,
+body.dark .navbar{
+
+    background: #1e293b;
+
+}
+
+body.dark .nav-links a{
+
+    color: #f8fafc;
+
+}
+
+body.dark .logo{
+
+    color: white;
+
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4{
+
+    color: white;
+
+}
+
 body.dark .stat-card,
 body.dark .feature-card,
 body.dark .speaker-card,
 body.dark .theme-card,
+body.dark .sponsor-card,
 body.dark .contact-info,
 body.dark .faq-item{
 
@@ -1026,11 +1053,9 @@ body.dark .faq-item{
 
 }
 
-body.dark h1,
-body.dark h2,
-body.dark h3{
+body.dark footer{
 
-    color: white;
+    background: #020617;
 
 }
 
