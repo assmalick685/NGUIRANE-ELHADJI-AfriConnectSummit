@@ -1,5 +1,4 @@
-/* ======================================================
-   SÉLECTION DES ÉLÉMENTS
+/* SÉLECTION DES ÉLÉMENTS
 ====================================================== */
 
 const menuToggle = document.getElementById("menu-toggle");
@@ -12,8 +11,7 @@ const backToTop = document.getElementById("backToTop");
 const currentYear = document.getElementById("currentYear");
 
 
-/* ======================================================
-   MENU MOBILE
+/* MENU MOBILE
 ====================================================== */
 
 if (menuToggle && navLinks) {
@@ -26,8 +24,7 @@ if (menuToggle && navLinks) {
 
 }
 
-/* ======================================================
-   NAVBAR AU SCROLL
+/* NAVBAR AU SCROLL
 ====================================================== */
 
 window.addEventListener("scroll", function () {
@@ -45,8 +42,7 @@ window.addEventListener("scroll", function () {
 });
 
 
-/* ======================================================
-   BOUTON RETOUR EN HAUT
+/* BOUTON RETOUR EN HAUT
 ====================================================== */
 
 window.addEventListener("scroll", function () {
@@ -80,8 +76,7 @@ if (backToTop) {
 
 }
 
-/* ======================================================
-   ANNÉE AUTOMATIQUE
+/* ANNÉE AUTOMATIQUE
 ====================================================== */
 
 if (currentYear) {
@@ -91,14 +86,12 @@ if (currentYear) {
 }
 
 
-/* ======================================================
-   VÉRIFICATION DU CHARGEMENT
+/* VÉRIFICATION DU CHARGEMENT
 ====================================================== */
 
 console.log("main.js chargé avec succès !");
 
-/* ======================================================
-   DARK MODE
+/* DARK MODE
 ====================================================== */
 
 const themeToggle = document.getElementById("theme-toggle");
@@ -127,8 +120,7 @@ if (themeToggle) {
 
 }
 
-/* ======================================================
-   COMPTE À REBOURS
+/* COMPTE À REBOURS
 ====================================================== */
 
 const days = document.getElementById("days");
@@ -193,8 +185,7 @@ setInterval(updateCountdown, 1000);
 
 updateCountdown();
 
-/* ======================================================
-   CHARGEMENT DU THÈME ENREGISTRÉ
+/* CHARGEMENT DU THÈME ENREGISTRÉ
 ====================================================== */
 
 const savedTheme = localStorage.getItem("theme");
@@ -218,3 +209,132 @@ if (savedTheme === "dark") {
     }
 
 }
+
+/* COMPTEURS ANIMÉS
+====================================================== */
+
+const counters = document.querySelectorAll(".counter");
+
+function animateCounter(counter) {
+
+    const target = Number(counter.dataset.target);
+
+    let current = 0;
+
+    const increment = Math.ceil(target / 100);
+
+    const timer = setInterval(function () {
+
+        current += increment;
+
+        if (current >= target) {
+
+            current = target;
+
+            clearInterval(timer);
+
+        }
+
+        counter.textContent = current;
+
+    }, 20);
+
+}
+
+const observer = new IntersectionObserver(function (entries) {
+
+    entries.forEach(function (entry) {
+
+        if (entry.isIntersecting) {
+
+            animateCounter(entry.target);
+
+            observer.unobserve(entry.target);
+
+        }
+
+    });
+
+}, {
+
+    threshold: 0.5
+
+});
+
+counters.forEach(function (counter) {
+
+    observer.observe(counter);
+
+});
+
+/* ONGLETS DU PROGRAMME
+====================================================== */
+
+const tabButtons = document.querySelectorAll(".tab-button");
+
+const tabContents = document.querySelectorAll(".tab-content");
+
+tabButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        const selectedDay = button.dataset.day;
+
+        tabButtons.forEach(function (btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+        tabContents.forEach(function (content) {
+
+            content.classList.remove("active");
+
+        });
+
+        button.classList.add("active");
+
+        document.getElementById(selectedDay).classList.add("active");
+
+    });
+
+});
+
+/* FILTRAGE DES INTERVENANTS
+====================================================== */
+
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+const speakerCards = document.querySelectorAll(".speaker-card");
+
+filterButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach(function (btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+        button.classList.add("active");
+
+        speakerCards.forEach(function (card) {
+
+            if (filter === "all" || card.dataset.category === filter) {
+
+                card.style.display = "block";
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+});
