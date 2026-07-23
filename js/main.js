@@ -338,3 +338,199 @@ filterButtons.forEach(function (button) {
     });
 
 });
+
+/* VALIDATION DU FORMULAIRE
+====================================================== */
+
+const contactForm = document.getElementById("contactForm");
+
+const fullname = document.getElementById("fullname");
+const email = document.getElementById("email");
+const phone = document.getElementById("phone");
+const participation = document.getElementById("participation");
+const country = document.getElementById("country");
+const message = document.getElementById("message");
+
+const successMessage = document.getElementById("successMessage");
+
+
+/* EXPRESSIONS RÉGULIÈRES
+====================================================== */
+
+const nameRegex = /^[A-Za-zÀ-ÿ\s'-]{3,}$/;
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const phoneRegex = /^\+?[0-9\s]{8,20}$/;
+
+/* AFFICHAGE DES ERREURS
+====================================================== */
+
+function showError(input, message) {
+
+    const formGroup = input.parentElement;
+
+    const error = formGroup.querySelector(".error-message");
+
+    error.textContent = message;
+
+    input.style.borderColor = "crimson";
+
+}
+
+
+/* SUPPRESSION DES ERREURS
+====================================================== */
+
+function clearError(input) {
+
+    const formGroup = input.parentElement;
+
+    const error = formGroup.querySelector(".error-message");
+
+    error.textContent = "";
+
+    input.style.borderColor ="#ced4da";
+
+}
+
+/* VALIDATION DES CHAMPS
+====================================================== */
+
+if (contactForm) {
+
+    contactForm.addEventListener("submit", function (e) {
+
+        e.preventDefault();
+
+        let isValid = true;
+
+        /* Nom complet */
+
+        if (fullname.value.trim() === "") {
+
+            showError(fullname, "Veuillez saisir votre nom complet.");
+
+            isValid = false;
+
+        } else if (!nameRegex.test(fullname.value.trim())) {
+
+            showError(fullname, "Le nom doit contenir au moins 3 lettres.");
+
+            isValid = false;
+
+        } else {
+
+            clearError(fullname);
+
+        }
+
+        /* Email */
+
+        if (email.value.trim() === "") {
+
+            showError(email, "Veuillez saisir votre adresse email.");
+
+            isValid = false;
+
+        } else if (!emailRegex.test(email.value.trim())) {
+
+            showError(email, "Adresse email invalide.");
+
+            isValid = false;
+
+        } else {
+
+            clearError(email);
+
+        }
+
+        /* Téléphone */
+
+        if (phone.value.trim() === "") {
+
+            showError(phone, "Veuillez saisir votre numéro de téléphone.");
+
+            isValid = false;
+
+        } else if (!phoneRegex.test(phone.value.trim())) {
+
+            showError(phone, "Numéro de téléphone invalide.");
+
+            isValid = false;
+
+        } else {
+
+            clearError(phone);
+
+        }
+
+        /* Type de participation */
+
+        if (participation.value === "") {
+
+            showError(participation, "Veuillez choisir un type de participation.");
+
+            isValid = false;
+
+        } else {
+
+            clearError(participation);
+
+        }
+
+        /* Pays */
+
+        if (country.value === "") {
+
+            showError(country, "Veuillez sélectionner votre pays.");
+
+            isValid = false;
+
+        } else {
+
+            clearError(country);
+
+        }
+
+        /* Motivation */
+
+        if (message.value.trim() === "") {
+
+            showError(message, "Veuillez écrire votre motivation.");
+
+            isValid = false;
+
+        } else if (message.value.trim().length < 20) {
+
+            showError(message, "Votre motivation doit contenir au moins 20 caractères.");
+
+            isValid = false;
+
+        } else {
+
+            clearError(message);
+
+        }
+
+       /* Si tout est valide */
+
+        if (isValid) {
+
+            successMessage.textContent = "Inscription envoyée avec succès !";
+
+            successMessage.style.color = "green";
+
+            contactForm.reset();
+
+            setTimeout(function () {
+
+            successMessage.textContent = "";
+
+        }, 4000);
+
+        }
+
+    });
+
+}
